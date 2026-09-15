@@ -334,6 +334,7 @@
                     </div>
                 </div>
 
+                <!-- TAB LIÊN HỆ -->
                 <div id="tab-contact" class="tab-content">
                     <div class="layout-grid">
                         <div class="box" style="border: none; background: transparent; padding: 0;">
@@ -399,7 +400,9 @@
         }
         checkScroll();
 
-        const scriptURL = 'THAY_LINK_GOOGLE_APPS_SCRIPT_CUA_BAN_VAO_DAY';
+        /* KỊCH BẢN GỬI DỮ LIỆU LÊN GOOGLE SHEETS */
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzn0T-zx_bGj98w2TTmeCWgZX4Hst2-g39PB1RVQkAFLH7ZHQp9ioKyux46hqL_N9Uf/exec';
+        
         const form = document.forms['submit-to-google-sheet'];
         const btn = document.getElementById('submitBtn');
         const msg = document.getElementById('successMsg');
