@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Phúc Nguyễn - R&D Packaging Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-blue: #16243c;
+            --navy-dark: #0b1320;
+            --gold-light: #f9d976;
+            --gold-main: #e1b343;
+            --gold-dark: #b8860b;
+            --bg-color: #2b1d14;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            height: 100%; font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color); 
+            background-image: radial-gradient(circle at 50% 50%, #4a3424 0%, #1a100a 100%);
+            overflow: hidden; display: flex; justify-content: center; align-items: center;
+        }
+
+        .scene { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
+
+        .card {
+            width: 90vw; max-width: 620px; aspect-ratio: 1.5; 
+            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--navy-dark) 100%);
+            border-radius: 8px; position: relative;
+            transform: rotateX(25deg) rotateY(0deg) rotateZ(-12deg);
+            transform-style: preserve-3d;
+            box-shadow: -15px 25px 35px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.15;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1;
+        }
+
+        /* --- MẶT TRƯỚC --- */
+        .card-front {
+            position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column;
+            justify-content: space-between; align-items: center; z-index: 2; transition: opacity 0.5s ease; text-align: center;
+            padding: 35px 20px 25px 20px;
+        }
+
+        .front-top { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
+
+        .name {
+            font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5.2vw, 2.8rem); letter-spacing: 2px;
+            background: linear-gradient(to right, var(--gold-light), var(--gold-main), var(--gold-dark));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin-bottom: 10px; white-space: nowrap;
+        }
+
+        .divider { width: 85%; max-width: 320px; height: 2px; background: linear-gradient(to right, transparent, var(--gold-main), transparent); margin-bottom: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        .role-title { color: #b0c4de; font-size: clamp(0.7rem, 2vw, 0.85rem); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; z-index: 10; font-weight: 500; }
+        
+        .subtitle { 
+            font-size: clamp(0.75rem, 2.5vw, 1rem); letter-spacing: 2px; color: var(--gold-light); 
+            text-transform: uppercase; cursor: pointer; padding: 6px 15px; border-radius: 4px; 
+            transition: all 0.3s ease; position: relative; z-index: 10; 
+            animation: textBlink 1.8s infinite ease-in-out;
+        }
+
+        @keyframes textBlink {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(249, 217, 118, 0.6); }
+            50% { opacity: 0.4; text-shadow: none; }
+        }
+
+        .subtitle::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: var(--gold-light); transition: all 0.3s ease; transform: translateX(-50%); }
+        .subtitle:hover { text-shadow: 0 0 12px rgba(249, 217, 118, 0.9); animation: none; }
+        .subtitle:hover::after { width: 80%; }
+
+        .front-contact { display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 10; width: 100%; }
+        .contact-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
+        .phone-group { display: flex; align-items: center; gap: 6px; color: #b0c4de; font-size: clamp(0.7rem, 2vw, 0.85rem); letter-spacing: 0.5px; white-space: nowrap; }
+        .phone-actions { display: flex; gap: 6px; }
+        .action-btn { background: rgba(225, 179, 67, 0.1); color: var(--gold-light); text-decoration: none; padding: 3px 8px; border-radius: 4px; font-size: clamp(0.6rem, 1.8vw, 0.72rem); border: 1px solid rgba(225, 179, 67, 0.3); transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .action-btn:hover { background: var(--gold-main); color: var(--navy-dark); box-shadow: 0 0 10px rgba(225, 179, 67, 0.4); }
+        .email-link { color: #b0c4de; text-decoration: none; font-size: clamp(0.7rem, 2vw, 0.85rem); letter-spacing: 0.5px; transition: color 0.3s ease; white-space: nowrap; }
+        .email-link:hover { color: var(--gold-light); }
+
+        /* --- MẶT CHI TIẾT --- */
+        .card-detail { position: absolute; width: 100%; height: 100%; padding: 40px; z-index: 3; opacity: 0; pointer-events: none; display: flex; flex-direction: column; color: #fff; box-sizing: border-box; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+        .close-btn { position: absolute; top: 30px; right: 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: var(--gold-light); font-size: 1.5rem; cursor: pointer; transition: all 0.3s; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 50; }
+        .close-btn:hover { background: var(--gold-main); transform: rotate(90deg); color: var(--navy-dark); }
+
+        /* --- TABS --- */
+        .tab-menu-wrapper { position: relative; width: calc(100% - 45px); margin-bottom: 25px; }
+        .tab-menu { display: flex; gap: 12px; padding-bottom: 12px; padding-right: 40px; justify-content: flex-start; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
+        .tab-menu::-webkit-scrollbar { height: 4px; }
+        .tab-menu::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+        .tab-menu::-webkit-scrollbar-thumb { background: rgba(225, 179, 67, 0.4); border-radius: 4px; }
+
+        .scroll-indicator { position: absolute; right: -10px; top: 0; bottom: 12px; width: 60px; background: linear-gradient(to left, rgba(11, 19, 32, 1) 20%, transparent); display: flex; justify-content: flex-end; align-items: center; padding-right: 15px; color: var(--gold-main); font-size: 1.2rem; pointer-events: none; transition: opacity 0.4s ease; z-index: 5; }
+        .scroll-indicator span { animation: bounceRight 1.5s infinite; }
+        @keyframes bounceRight { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+
+        .tab-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(225, 179, 67, 0.2); color: #b0c4de; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: clamp(0.8rem, 2.5vw, 0.95rem); cursor: pointer; padding: 10px 20px; border-radius: 25px; transition: all 0.3s ease; position: relative; flex-shrink: 0; letter-spacing: 1px; scroll-snap-align: start; }
+        .tab-btn:hover { background: rgba(255,255,255,0.1); color: var(--gold-light); border-color: rgba(225, 179, 67, 0.5); }
+        .tab-btn.active { background: var(--gold-main); color: var(--navy-dark); border-color: var(--gold-main); font-weight: 700; box-shadow: 0 4px 10px rgba(225, 179, 67, 0.2); }
+
+        .tab-contact-btn { border-color: var(--gold-main); color: var(--gold-main); }
+        .tab-contact-btn:hover { background: rgba(225, 179, 67, 0.15); color: var(--gold-light); border-color: var(--gold-main); }
+        .tab-btn.active.tab-contact-btn { color: var(--navy-dark); }
+
+        .tab-content { display: none; flex-direction: column; animation: fadeIn 0.4s ease forwards; }
+        .tab-content.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .layout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .box { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(225, 179, 67, 0.15); padding: 18px; border-radius: 8px; }
+        h3 { color: var(--gold-light); font-size: 1rem; margin-bottom: 12px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px dashed rgba(225, 179, 67, 0.3); padding-bottom: 6px;}
+        ul { list-style: none; }
+        li { font-size: 0.85rem; line-height: 1.5; margin-bottom: 10px; color: #b0c4de; position: relative; padding-left: 16px; text-align: justify; }
+        li::before { content: '▹'; position: absolute; left: 0; color: var(--gold-main); font-weight: bold;}
+        li strong { color: #f9d976; font-weight: 600; }
+        .mat-item { margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;}
+        .mat-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0;}
+        .tag { display: inline-block; background: rgba(225, 179, 67, 0.15); color: var(--gold-light); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid rgba(225, 179, 67, 0.4); font-weight: 600; }
+        .mat-desc { font-size: 0.8rem; color: #a0aec0; line-height: 1.4; text-align: justify;}
+
+        /* --- KHUNG HÌNH ẢNH MINH HỌA SẢN PHẨM --- */
+        .product-img-box {
+            width: 100%;
+            height: 130px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px dashed rgba(225, 179, 67, 0.4);
+            margin-bottom: 12px;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-placeholder {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* --- FORM LIÊN HỆ --- */
+        .contact-form { display: flex; flex-direction: column; gap: 12px; }
+        .contact-form input, .contact-form select, .contact-form textarea {
+            width: 100%; padding: 12px 15px; background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(225, 179, 67, 0.3); border-radius: 6px; 
+            color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; transition: all 0.3s;
+        }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+        .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: var(--gold-main); background: rgba(0,0,0,0.3); }
+        .contact-form select option { background: var(--navy-blue); color: #fff; }
+        .submit-btn {
+            background: var(--gold-main); color: var(--navy-dark); border: none; padding: 12px 25px; 
+            border-radius: 25px; font-weight: 700; cursor: pointer; transition: all 0.3s; 
+            width: 100%; text-transform: uppercase; letter-spacing: 1px; font-family: 'Montserrat', sans-serif;
+        }
+        .submit-btn:hover { box-shadow: 0 4px 15px rgba(225, 179, 67, 0.4); transform: translateY(-2px); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .success-msg { display: none; color: #4ade80; text-align: center; font-size: 0.9rem; margin-top: 10px; font-weight: 500; }
+
+        .card.is-zoomed { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.9); width: 90vw; max-width: 980px; aspect-ratio: unset; height: 88vh; max-height: 700px; }
+        .card.is-zoomed .card-front { opacity: 0; pointer-events: none; }
+        .card.is-zoomed .card-detail { opacity: 1; pointer-events: all; transition: opacity 0.5s ease 0.6s; }
+
+        @media (max-width: 768px) {
+            .card { transform: rotateX(15deg) rotateY(0deg) rotateZ(-6deg); }
+            .layout-grid { grid-template-columns: 1fr; gap: 15px; }
+            .card-detail { padding: 30px 15px 35px 15px; }
+            .card.is-zoomed { width: 95vw; height: 92vh; max-height: 900px; border-radius: 12px; }
+            .box { padding: 15px; }
+            h3 { font-size: 0.9rem; }
+            li { font-size: 0.8rem; }
+            .mat-desc { font-size: 0.8rem; }
+            .close-btn { top: 20px; right: 15px; width: 32px; height: 32px; font-size: 1.2rem; }
+            .tab-menu-wrapper { width: calc(100% - 35px); margin-bottom: 18px;}
+            .tab-btn { padding: 8px 14px; font-size: 0.75rem; }
+            .product-img-box { height: 110px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="card" id="myCard">
+            <!-- MẶT TRƯỚC -->
+            <div class="card-front" id="frontSide">
+                <div class="front-top">
+                    <h1 class="name">Nguyễn Văn Phúc</h1>
+                    <div class="divider"></div>
+                    <p class="role-title">Nhân viên Kỹ thuật</p>
+                    <p class="subtitle" onclick="zoomIn()" title="Nhấp để xem hồ sơ R&D">Packaging Designer & R&D</p>
+                </div>
+                
+                <div class="front-contact">
+                    <div class="contact-row">
+                        <div class="phone-group"><span>📞 0358339363</span></div>
+                        <div class="phone-actions">
+                            <a href="tel:0358339363" class="action-btn">Gọi Ngay</a>
+                            <a href="https://zalo.me/0358339363" target="_blank" class="action-btn">Zalo</a>
+                        </div>
+                    </div>
+                    <a href="mailto:phucnguyen440@gmail.com" class="email-link">✉️ phucnguyen440@gmail.com</a>
+                </div>
+            </div>
+
+            <!-- MẶT CHI TIẾT BÊN TRONG -->
+            <div class="card-detail">
+                <button class="close-btn" onclick="zoomOut()">×</button>
+                
+                <div class="tab-menu-wrapper">
+                    <div class="scroll-indicator" id="scrollIndicator"><span>➔</span></div>
+                    <div class="tab-menu" id="tabMenu" onscroll="checkScroll()">
+                        <button class="tab-btn active" onclick="openTab('tab-overview')">Mục tiêu & Tổng quan</button>
+                        <button class="tab-btn" onclick="openTab('tab-design')">Quy trình Thiết kế</button>
+                        <button class="tab-btn" onclick="openTab('tab-tray')">TRAY</button>
+                        <button class="tab-btn" onclick="openTab('tab-eva')">EVA</button>
+                        <button class="tab-btn" onclick="openTab('tab-danpla')">DANPLA</button>
+                        <button class="tab-btn tab-contact-btn" onclick="openTab('tab-contact')">Liên Hệ Nhận Tư Vấn</button>
+                    </div>
+                </div>
+
+                <div id="tab-overview" class="tab-content active">
+                    <div class="layout-grid">
+                        <div class="box" style="border: none; background: transparent; padding: 0;">
+                            <h3>Mục tiêu cốt lõi ngành Bao bì</h3>
+                            <ul>
+                                <li><strong>Bảo vệ tuyệt đối:</strong> Chống va đập, trầy xước và chống tĩnh điện (ESD) cho linh kiện điện tử, thiết bị y tế.</li>
+                                <li><strong>Tối ưu hóa Chi phí:</strong> Thiết kế cấu trúc thông minh giảm trọng lượng, tối đa hóa không gian xếp dỡ lưu kho và logistics.</li>
+                                <li><strong>Phát triển bền vững:</strong> Cải tiến vật liệu tái chế, thiết kế bao bì gia tăng trải nghiệm người dùng (unboxing).</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h3>Tổng quan Giải pháp Vật liệu</h3>
+                            <ul>
+                                <li><strong>Nhóm định hình (Thermoforming):</strong> Nhựa PET (dai, trong), Nhựa PS/HIPS (chống tĩnh điện), Nhựa PP (chịu nhiệt).</li>
+                                <li><strong>Nhóm chống sốc mút xốp:</strong> Mút xốp EVA định hình cứng cáp, PE Foam đàn hồi mềm, màng lót nhung.</li>
+                                <li><strong>Nhóm hộp/vách chia:</strong> Nhựa sóng Danpla (siêu nhẹ, chịu nén dọc), Thùng Carton nhiều lớp sóng.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-design" class="tab-content">
+                    <div class="layout-grid" style="grid-template-columns: 1fr;">
+                        <div class="box">
+                            <h3>Các bước Thiết kế R&D</h3>
+                            <ul>
+                                <li><strong>1. Phân tích & Lấy yêu cầu:</strong> Tiếp nhận mẫu linh kiện thực tế hoặc file 3D. Đánh giá tính chất vật lý và yêu cầu đóng gói (chống sốc, chống tĩnh điện).</li>
+                                <li><strong>2. Thiết kế Cấu trúc (Structural Design):</strong> Dựng mô hình 3D cho khay/vách. Tính toán điểm chịu lực (tỳ), góc thoát khuôn và tối ưu hóa không gian.</li>
+                                <li><strong>3. Tạo mẫu & Thử nghiệm (Prototyping):</strong> Chế tạo mẫu thử vật lý (in 3D, cắt CNC xốp). Đánh giá Fit Test và Drop Test để hiệu chỉnh dung sai.</li>
+                                <li><strong>4. Tối ưu & Chuẩn hóa:</strong> Xuất bản vẽ 2D (Dieline) tiêu chuẩn, xác định thông số vật liệu để chuyển giao sản xuất hàng loạt.</li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB TRAY (Đã tích hợp khung ảnh minh họa) -->
+                <div id="tab-tray" class="tab-content">
+                    <div class="layout-grid">
+                        <div class="box">
+                            <!-- Khung ảnh ví dụ cho Tray (Cậu chủ thay link ảnh vào src bên dưới) -->
+                            <div class="product-img-box">
+                                <img src="[DÁN_LINK_ẢNH_TRAY_CỦA_BẠN_VÀO_ĐÂY]" alt="Ví dụ sản phẩm Tray" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="img-placeholder" style="display:none;">[Hình ảnh thực tế Khay Tray định hình]<br><small>Thay link ảnh vào mã nguồn</small></div>
+                            </div>
+                            <h3>Vật liệu & Đặc tính</h3>
+                            <div class="mat-item"><span class="tag">PS / HIPS</span><div class="mat-desc">Chống tĩnh điện (ESD), tiêu chuẩn linh kiện vi mạch.</div></div>
+                            <div class="mat-item"><span class="tag">Nhựa PET</span><div class="mat-desc">Trong suốt, dai, chịu lực xé tốt cho y tế, mỹ phẩm.</div></div>
+                        </div>
+                        <div class="box">
+                            <h3>Quy trình phát triển Tray</h3>
+                            <ul>
+                                <li><strong>1. Quét biên dạng:</strong> Thiết kế ngược linh kiện 3D chuẩn xác.</li>
+                                <li><strong>2. Thiết kế Khuôn:</strong> Tính góc thoát khuôn & tỷ lệ giãn nhựa.</li>
+                                <li><strong>3. Gia công CNC:</strong> Phay khuôn nhôm hoặc khuôn mẫu.</li>
+                                <li><strong>4. Hút định hình:</strong> Ép nhựa nóng, kiểm tra độ đồng đều.</li>
+                                <li><strong>5. Fit Test & Bế cắt:</strong> Cắt biên màng, kiểm tra độ bám khay.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB EVA (Đã tích hợp khung ảnh minh họa) -->
+                <div id="tab-eva" class="tab-content">
+                    <div class="layout-grid">
+                        <div class="box">
+                            <!-- Khung ảnh ví dụ cho EVA -->
+                            <div class="product-img-box">
+                                <img src="[DÁN_LINK_ẢNH_EVA_CỦA_BẠN_VÀO_ĐÂY]" alt="Ví dụ sản phẩm EVA" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="img-placeholder" style="display:none;">[Hình ảnh thực tế Khay Mút EVA]<br><small>Thay link ảnh vào mã nguồn</small></div>
+                            </div>
+                            <h3>Vật liệu & Đặc tính</h3>
+                            <div class="mat-item"><span class="tag">Mút xốp EVA</span><div class="mat-desc">Tỷ trọng cao, form cứng cáp, cắt CNC sắc nét cho hộp cao cấp.</div></div>
+                            <div class="mat-item"><span class="tag">PE Foam & Nhung</span><div class="mat-desc">Đàn hồi cao, chống xước, phủ lót nhung tăng thẩm mỹ.</div></div>
+                        </div>
+                        <div class="box">
+                            <h3>Quy trình phát triển Khay EVA</h3>
+                            <ul>
+                                <li><strong>1. Phân tích điểm tỳ:</strong> Xác định độ sâu an toàn chống va đập.</li>
+                                <li><strong>2. Thiết kế Dieline:</strong> Chuyển hóa biên dạng thành lớp cắt 2D/3D.</li>
+                                <li><strong>3. Lạng & Phay CNC:</strong> Tạo hốc định hình sản phẩm.</li>
+                                <li><strong>4. Bồi lớp & Lắp ghép:</strong> Dán ép nhiệt và phủ lót nhung.</li>
+                                <li><strong>5. Drop Test:</strong> Đánh giá khả năng chống sốc thực tế.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB DANPLA (Đã tích hợp khung ảnh minh họa) -->
+                <div id="tab-danpla" class="tab-content">
+                    <div class="layout-grid">
+                        <div class="box">
+                            <!-- Khung ảnh ví dụ cho Danpla -->
+                            <div class="product-img-box">
+                                <img src="[DÁN_LINK_ẢNH_DANPLA_CỦA_BẠN_VÀO_ĐÂY]" alt="Ví dụ sản phẩm Danpla" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="img-placeholder" style="display:none;">[Hình ảnh thực tế Vách Nhựa Danpla]<br><small>Thay link ảnh vào mã nguồn</small></div>
+                            </div>
+                            <h3>Vật liệu & Đặc tính</h3>
+                            <div class="mat-item"><span class="tag">Nhựa Danpla</span><div class="mat-desc">Ống sóng rỗng siêu nhẹ, chịu nén dọc tốt, bền bỉ.</div></div>
+                            <div class="mat-item"><span class="tag">Danpla ESD & Nẹp</span><div class="mat-desc">Triệt tiêu tĩnh điện, kết hợp nẹp viền bảo vệ an toàn.</div></div>
+                        </div>
+                        <div class="box">
+                            <h3>Quy trình phát triển Vách Danpla</h3>
+                            <ul>
+                                <li><strong>1. Tính toán không gian:</strong> Lấy lọt lòng thùng chứa, chia khoang.</li>
+                                <li><strong>2. Thiết kế kết cấu:</strong> Tính rãnh xẻ đan chéo âm-dương.</li>
+                                <li><strong>3. Cắt bế & Gia công:</strong> Tạo ngàm khóa chống bung rời.</li>
+                                <li><strong>4. Gia cố an toàn:</strong> Đóng ghim, dán nẹp bo viền mép trên.</li>
+                                <li><strong>5. Đánh giá lắp ráp:</strong> Kiểm tra độ rơ lắc và thao tác lấy hàng.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-contact" class="tab-content">
+                    <div class="layout-grid">
+                        <div class="box" style="border: none; background: transparent; padding: 0;">
+                            <h3 style="border-bottom: none; font-size: 1.4rem; margin-bottom: 5px;">Hân hạnh hỗ trợ Quý khách!</h3>
+                            <p style="color: #b0c4de; font-size: 0.9rem; margin-bottom: 15px;">Quý khách có nhu cầu thiết kế, báo giá vật liệu hoặc tư vấn giải pháp đóng gói? Xin để lại thông tin, Phúc sẽ liên hệ lại sớm nhất.</p>
+                            <ul style="font-size: 0.85rem;">
+                                <li>📞 Zalo / Điện thoại: <strong>0358339363</strong></li>
+                                <li>✉️ Email: <strong>phucnguyen440@gmail.com</strong></li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <form id="googleSheetForm" class="contact-form" name="submit-to-google-sheet">
+                                <input type="text" name="name" placeholder="Họ và Tên / Đơn vị" required>
+                                <input type="text" name="contact" placeholder="Số điện thoại / Email" required>
+                                <select name="interest" required>
+                                    <option value="" disabled selected>Quý khách quan tâm giải pháp nào?</option>
+                                    <option value="Khay nhựa Tray">Khay định hình (Tray PET/PS/PP)</option>
+                                    <option value="Khay mút xốp EVA">Khay mút xốp chống sốc (EVA/PE)</option>
+                                    <option value="Vách nhựa Danpla">Vách chia linh kiện (Danpla)</option>
+                                    <option value="Khác">Cần tư vấn tổng thể / Khác</option>
+                                </select>
+                                <textarea name="message" rows="2" placeholder="Nội dung cần hỗ trợ (Quy cách...)" required></textarea>
+                                <button type="submit" class="submit-btn" id="submitBtn">Gửi Yêu Cầu ➔</button>
+                                <div class="success-msg" id="successMsg">✔ Gửi thông tin thành công!</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const card = document.getElementById('myCard');
+        const tabMenu = document.getElementById('tabMenu');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+
+        function checkScroll() {
+            if (tabMenu.scrollWidth - tabMenu.clientWidth - tabMenu.scrollLeft <= 10) {
+                scrollIndicator.style.opacity = '0';
+            } else { scrollIndicator.style.opacity = '1'; }
+        }
+
+        function zoomIn() { card.classList.add('is-zoomed'); setTimeout(checkScroll, 600); }
+
+        function zoomOut() {
+            card.classList.remove('is-zoomed');
+            setTimeout(() => { openTab('tab-overview'); document.querySelector('.card-detail').scrollTop = 0; tabMenu.scrollLeft = 0; }, 600);
+        }
+
+        function openTab(tabId) {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            const activeBtn = event.currentTarget;
+            activeBtn.classList.add('active');
+            activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            document.querySelector('.card-detail').scrollTop = 0;
+            checkScroll();
+        }
+        checkScroll();
+
+        const scriptURL = 'THAY_LINK_GOOGLE_APPS_SCRIPT_CUA_BAN_VAO_DAY';
+        const form = document.forms['submit-to-google-sheet'];
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('successMsg');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = 'Đang gửi...';
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
+                .then(response => {
+                    msg.style.display = 'block';
+                    btn.style.display = 'none';
+                    form.reset();
+                    setTimeout(() => {
+                        msg.style.display = 'none';
+                        btn.style.display = 'block';
+                        btn.disabled = false;
+                        btn.innerHTML = 'Gửi Yêu Cầu ➔';
+                    }, 5000);
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Lỗi đường truyền. Vui lòng thử lại.');
+                    btn.disabled = false;
+                    btn.innerHTML = 'Gửi Yêu Cầu ➔';
+                });
+        });
+    </script>
+</body>
+</html>
